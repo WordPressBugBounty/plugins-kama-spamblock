@@ -1,20 +1,20 @@
 === Plugin Name ===
 Stable tag: trunk
 Contributors: Tkama
-Tested up to: 6.6.2
+Tested up to: 7.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: spam, spammer, autospam, spamblock, antispam, anti-spam, protect, comments, ping, trackback, bot, robot, human, captcha, invisible
 
-Light and invisible method to block auto-spam when a spam comment is posted. Pings and trackbacks check for real backlinks.
+Light and invisible protection against basic automated comment spam. Pings and trackbacks check for real backlinks.
 
 
 
 == Description ==
 
-Effectively prevent automatic spam when a spam comment is posted with Kama Spamblock, a plugin that operates discreetly and remains completely invisible to users—no captcha codes required. The plugin not only blocks spam comments but also conducts thorough checks on pings and trackbacks to ensure the authenticity of backlinks.
+Kama Spamblock helps block basic automated spam comments while remaining completely invisible to users—no captcha codes required. It uses a lightweight browser check, so it is not intended to stop sophisticated bots that load pages and execute JavaScript. The plugin also checks pings and trackbacks for backlinks to your site.
 
-Even if you are using an external comment system like Disqus, installing Kama Spamblock remains valuable. This is because autospam can be posted directly to the 'wp-comments-post.php' file, and the plugin serves as a robust defense against such comments.
+Even if you are using an external comment system like Disqus, Kama Spamblock can add lightweight protection. Automated requests can be posted directly to the 'wp-comments-post.php' file, where the plugin can block basic bots.
 
 
 
@@ -35,6 +35,14 @@ No! The plugin is invisible to users. You should navigate to the 'Discussion' se
 
 
 == Changelog ==
+
+= 1.9.0 =
+* IMP: Return a 403 response for blocked spam comments.
+* FIX: Prevent malformed comment requests from causing PHP errors.
+* FIX: Use a generated unique code immediately after plugin activation.
+* FIX: Minor bugfix.
+* CHG: Min PHP version increased to 7.4.
+* IMP: Refactoring (Spam_Blocker class extracted).
 
 = 1.8.3 =
 * FIX: XSS vulnerability fixed. Thanks to [Wordfence](https://www.wordfence.com/) for the report.
