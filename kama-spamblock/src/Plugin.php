@@ -8,14 +8,16 @@ class Plugin {
 	public string $main_file;
 
 	public Options $opt;
-	public Spam_Blocker $blocker;
+	public Guards\Comment_Blocker $comment_blocker;
+	public Guards\Trackback_Blocker $trackback_blocker;
 
 	public function __construct( string $main_file ) {
 		$this->main_file = $main_file;
 		$this->dir       = dirname( $main_file );
 
-		$this->opt     = new Options();
-		$this->blocker = new Spam_Blocker( $this->opt );
+		$this->opt               = new Options();
+		$this->comment_blocker   = new Guards\Comment_Blocker( $this->opt );
+		$this->trackback_blocker = new Guards\Trackback_Blocker();
 	}
 
 	public function init(): void {
@@ -26,6 +28,8 @@ class Plugin {
 		is_admin()
 			? $this->init_admin()
 			: $this->init_front();
+
+		$this->comment_blocker->init();
 	}
 
 	private function init_admin(): void {
@@ -34,8 +38,15 @@ class Plugin {
 	}
 
 	private function init_front(): void {
-		add_action( 'wp_footer', [ $this->blocker, 'print_main_js' ], 0 );
-		add_filter( 'preprocess_comment', [ $this->blocker, 'block_spam' ], 0 );
+		add_action( 'wp_footer', [ $this->comment_blocker, 'print_main_js' ], 0 );
+		add_filter( 'preprocess_comment', [ $this, 'block_spam' ], 0 );
+	}
+
+	public function block_spam( array $commentdata ): array {
+		$this->trackback_blocker->block_spam( $commentdata );
+		$this->comment_blocker->block_spam( $commentdata );
+
+		return $commentdata;
 	}
 
 	public static function settings_link( $links ) {
@@ -45,4 +56,3 @@ class Plugin {
 	}
 
 }
-

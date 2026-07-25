@@ -14,14 +14,15 @@
  * Requires PHP: 7.4
  * Requires at least: 5.7
  *
- * Version: 1.9.0
+ * Version: 2.0.0
  */
 
 namespace Kama_Spamblock;
 
 require_once __DIR__ . '/src/Plugin.php';
 require_once __DIR__ . '/src/Options.php';
-require_once __DIR__ . '/src/Spam_Blocker.php';
+require_once __DIR__ . '/src/Guards/Comment_Blocker.php';
+require_once __DIR__ . '/src/Guards/Trackback_Blocker.php';
 
 add_action( 'init', '\Kama_Spamblock\init', 11 );
 
